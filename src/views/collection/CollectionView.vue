@@ -3,13 +3,17 @@
 	<v-container>
 		<v-row>
 			<v-col
-				cols="12"
-				sm="6"
+				cols="14"
+				sm="8"
 				md="4"
+				lg="3"
+				xl="2"
+				style="min-width: 380px; max-width: 380px"
+				class="d-flex"
 				v-for="device in userCollection"
 				:key="device.id"
 			>
-				<v-card class="pa-3" elevation="2">
+				<v-card class="pa-3" elevation="2" style="width: 100%">
 					<div class="text-h5 text-center pa-3">
 						{{ device.details.model_name }}
 					</div>

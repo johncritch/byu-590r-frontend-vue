@@ -4,15 +4,21 @@ import LoginView from "./views/login/LoginView.vue"
 import { mapState } from "vuex"
 import { ref } from "vue"
 import background from "@/assets/images/background.png"
+import { useDisplay } from "vuetify"
 
 export default {
 	setup() {
 		const theme = ref("dark")
+		const drawer = ref(false)
+		const { smAndDown } = useDisplay()
+
 		function changeTheme() {
 			theme.value = theme.value === "light" ? "dark" : "light"
 		}
-		return { theme, changeTheme }
+
+		return { theme, changeTheme, drawer, smAndDown }
 	},
+
 	name: "App",
 	components: {
 		LoginView,
@@ -164,9 +170,17 @@ export default {
 		<v-app-bar v-if="isAuthenticated">
 			<v-btn to="/" default>The Apple Basket</v-btn>
 			<v-spacer></v-spacer>
-			<v-btn to="/" default>Home</v-btn>
-			<v-btn to="about">About</v-btn>
-			<v-btn class="mr-1" to="collection">My Collection</v-btn>
+			<template v-if="!smAndDown">
+				<v-btn to="/" default>Home</v-btn>
+				<v-btn to="/about">About</v-btn>
+				<v-btn class="mr-1" to="/collection">My Collection</v-btn>
+			</template>
+
+			<template v-else>
+				<v-btn icon @click="drawer = true">
+					<v-icon>mdi-menu</v-icon>
+				</v-btn>
+			</template>
 			<v-menu min-width="200px" rounded>
 				<template v-slot:activator="{ props }">
 					<v-btn icon v-bind="props">
@@ -221,6 +235,25 @@ export default {
 			> -->
 			<!-- <v-btn @click="logout()">Logout</v-btn> -->
 		</v-app-bar>
+
+		<v-navigation-drawer
+			v-model="drawer"
+			temporary
+			:location="'left'"
+			:width="250"
+		>
+			<v-list nav dense>
+				<v-list-item to="/">
+					<v-list-item-title>Home</v-list-item-title>
+				</v-list-item>
+				<v-list-item to="/about">
+					<v-list-item-title>About</v-list-item-title>
+				</v-list-item>
+				<v-list-item to="/collection">
+					<v-list-item-title>My Collection</v-list-item-title>
+				</v-list-item>
+			</v-list>
+		</v-navigation-drawer>
 
 		<v-main>
 			<v-container>

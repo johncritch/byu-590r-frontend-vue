@@ -62,7 +62,14 @@ export default {
 		close() {
 			this.dialog = false
 		},
-		save() {
+		async save() {
+			const validation = await this.$refs.form?.validate()
+
+			if (!validation.valid) {
+				// Keep dialog open, show validation errors
+				return
+			}
+
 			const deviceToSave = {
 				...this.editedDevice,
 				release_date: this.editedDevice.release_date
@@ -71,6 +78,7 @@ export default {
 							.split("T")[0]
 					: null
 			}
+
 			this.$emit("save", deviceToSave)
 			this.close()
 		}

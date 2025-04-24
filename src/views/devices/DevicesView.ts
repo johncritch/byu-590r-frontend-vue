@@ -85,7 +85,7 @@ export default {
 					if (device && !this.isInCollection(deviceId)) {
 						this.userCollection.push(device)
 					}
-					alert("Added to collection!")
+					// alert("Added to collection!")
 				})
 				.catch((err) => {
 					console.error("Failed to add to collection:", err)

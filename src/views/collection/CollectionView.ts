@@ -27,7 +27,7 @@ export default {
 				.dispatch("user/removeDeviceFromCollection", deviceId)
 				.then(() => {
 					this.fetchCollection()
-					alert("Removed from collection.")
+					// alert("Removed from collection.")
 				})
 				.catch((err) => {
 					console.error("Failed to remove device:", err)
